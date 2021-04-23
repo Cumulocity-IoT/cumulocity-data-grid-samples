@@ -9,25 +9,21 @@ import { LocalDataGridComponent } from "./local-data-grid.compontent";
 
 const routes: Routes = [
   {
-    path: "samples/data-grid",
+    path: "data-grid",
     component: LocalDataGridComponent,
   },
+  {
+    path: '',
+    redirectTo: 'data-grid',
+    pathMatch: 'full'
+  }
 ];
 
-const samples = new NavigatorNode({
-  label: "Examples",
-  icon: "road",
+const dataGridNavigation = new NavigatorNode({
+  label: "Local Data Grid",
+  icon: "table",
   priority: 1,
 });
-
-samples.add(
-  new NavigatorNode({
-    label: "Data Grid",
-    path: "/samples/data-grid",
-    icon: "table",
-    priority: 1,
-  })
-);
 
 @NgModule({
   declarations: [LocalDataGridComponent],
@@ -36,9 +32,9 @@ samples.add(
   providers: [
     {
       provide: HOOK_NAVIGATOR_NODES,
-      useValue: { get: () => samples },
+      useValue: { get: () => dataGridNavigation },
       multi: true,
     },
   ],
 })
-export class LocalDataGridModule {}
+export class LocalDataGridModule { }
