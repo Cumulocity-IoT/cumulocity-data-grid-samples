@@ -1,15 +1,11 @@
 <c8y-title>Local Data Grid example</c8y-title>
 <c8y-data-grid
-  [title]="'Grid Title' | translate"
+  [title]="'Randomly generated local data' | translate"
   class="scroll-column"
-  [noMatchingItemsLabel]="'No matching items.' | translate"
   [columns]="columns"
   [rows]="rows"
   [pagination]="pagination"
-  [selectable]="true"
   [actionControls]="actionControls"
-  [bulkActionControls]="bulkActionControls"
-  (itemsSelect)="handleItemsSelect($event)"
 >
   <c8y-column name="temperature">
     <ng-container *c8yCellRendererDef="let context">
