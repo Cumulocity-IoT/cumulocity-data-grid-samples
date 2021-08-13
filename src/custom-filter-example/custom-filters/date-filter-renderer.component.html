@@ -1,0 +1,26 @@
+<div class="form-group">
+  <label>{{ 'From' | translate }}</label>
+  <input type="date" class="form-control" [(ngModel)]="dates.dateFrom" />
+  <label>{{ 'To' | translate }}</label>
+  <input type="date" class="form-control" [(ngModel)]="dates.dateTo" />
+</div>
+<div class="data-grid__dropdown__footer d-flex separator-top">
+  <button
+    class="btn btn-default btn-sm m-r-8 flex-grow"
+    (click)="resetFilter()"
+    title="{{ 'Reset' | translate }}"
+    translate
+  >
+    {{ 'Reset' | translate }}
+  </button>
+
+  <button
+    class="btn btn-primary btn-sm flex-grow"
+    [disabled]="!dates.dateTo && !dates.dateFrom"
+    (click)="applyFilter()"
+    title="{{ 'Apply' | translate }}"
+    translate
+  >
+    {{ 'Apply' | translate }}
+  </button>
+</div>

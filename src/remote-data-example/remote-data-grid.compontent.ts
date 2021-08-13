@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActionControl, Column, Pagination } from '@c8y/ngx-components';
-import { DevicesDatasourceService } from './devices-datasource.service';
+import { DevicesDatasourceService } from '../services/devices-datasource.service';
 
 @Component({
   providers: [DevicesDatasourceService],

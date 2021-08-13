@@ -1,0 +1,26 @@
+<div class="form-group">
+  <label>{{ 'Number filter' | translate }}</label>
+  <div class="c8y-select-wrapper">
+    <select id="symbolSelect" class="form-control" [(ngModel)]="numberFilter.symbol">
+      <option *ngFor="let symbol of numberSymbols" (click)="onDropdownSelect(symbol)" [value]="symbol">
+        {{ symbol }}
+      </option>
+    </select>
+  </div>
+  <input type="number" class="form-control" [(ngModel)]="numberFilter.value" />
+</div>
+
+<div class="data-grid__dropdown__footer d-flex separator-top">
+  <button class="btn btn-default btn-sm m-r-8 flex-grow" (click)="resetFilter()" title="{{ 'Reset' | translate }}">
+    {{ 'Reset' | translate }}
+  </button>
+
+  <button
+    class="btn btn-primary btn-sm flex-grow"
+    (click)="applyFilter()"
+    [disabled]="this.numberFilter.value === null"
+    title="{{ 'Apply' | translate }}"
+  >
+    {{ 'Apply' | translate }}
+  </button>
+</div>
