@@ -5,6 +5,7 @@ import { CoreModule, BootstrapComponent, RouterModule, PluginsModule } from '@c8
 import { LocalDataGridModule } from './local-data-example/local-data-grid.module';
 import { RemoteDataGridModule } from './remote-data-example/remote-data-grid.module';
 import { CustomFilterExampleModule } from './custom-filter-example/custom-filter-example.module';
+import { MinimumDataGridModule } from './minimum-example/minimum-data-grid.module';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { CustomFilterExampleModule } from './custom-filter-example/custom-filter
     LocalDataGridModule,
     RemoteDataGridModule,
     CustomFilterExampleModule,
+    MinimumDataGridModule,
     // Cumulocity imports
     BrowserAnimationsModule,
     RouterModule.forRoot(),
