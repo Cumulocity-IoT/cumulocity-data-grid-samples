@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActionControl, Column, ColumnDataType, Pagination } from '@c8y/ngx-components';
+import { Column, ColumnDataType, Pagination } from '@c8y/ngx-components';
 import { createMockedData, ExampleStructure } from './data';
 
 @Component({
@@ -7,6 +7,7 @@ import { createMockedData, ExampleStructure } from './data';
   templateUrl: './local-data-grid.component.html',
 })
 export class LocalDataGridComponent {
+ 
   columns: Column[];
   rows: ExampleStructure[];
 
@@ -15,8 +16,6 @@ export class LocalDataGridComponent {
     currentPage: 1,
   };
 
-  actionControls: ActionControl[] = [];
-
   constructor() {
     this.columns = this.getDefaultColumns();
     this.rows = createMockedData(100);
@@ -24,7 +23,7 @@ export class LocalDataGridComponent {
 
   getDefaultColumns(): Column[] {
     return [
-      { name: 'id', header: 'ID', path: 'id' },
+      { name: 'id', header: 'ID', path: 'id', sortOrder: 'desc' },
       {
         name: 'name',
         header: 'Name',
@@ -34,7 +33,6 @@ export class LocalDataGridComponent {
       {
         header: 'Temperature',
         name: 'temperature',
-        sortable: true,
         filterable: true,
         path: 'temperature',
         dataType: ColumnDataType.Numeric,

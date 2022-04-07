@@ -1,0 +1,27 @@
+<c8y-title>Custom Grid example</c8y-title>
+<c8y-data-grid
+  [title]="'All devices on this tenant' | translate"
+  class="scroll-column"
+  [columns]="columns"
+  [pagination]="pagination"
+  [actionControls]="actionControls"
+  [bulkActionControls]="bulkActionControls"
+  [selectable]="true"
+  [serverSideDataCallback]="devicesDataSource.serverSideDataCallback"
+  [refresh]="refresh"
+  [loadingItemsLabel]="loadingItemsLabel"
+  [loadMoreItemsLabel]="loadMoreItemsLabel"
+  [infiniteScroll]="mode"
+  (onConfigChange)="onConfigChange($event)"
+>
+  <c8y-column name="id">
+    <ng-container *c8yCellRendererDef="let context">
+      <a href="#/{{ context.value }}">{{ context.value }}</a>
+    </ng-container>
+  </c8y-column>
+  <c8y-column name="lastUpdated">
+    <ng-container *c8yCellRendererDef="let context">
+      {{ context.value | date: 'medium' }}
+    </ng-container>
+  </c8y-column>
+</c8y-data-grid>

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { InventoryService, IResultList, IManagedObject, QueriesUtil } from '@c8y/client';
 import { Column, DataSourceModifier, Pagination, ServerSideDataResult } from '@c8y/ngx-components';
+import { CustomColumn } from 'src/models/data-grid.model';
+import { has, isEmpty } from 'lodash-es';
 
 @Injectable({ providedIn: 'root' })
 export class InventoryDatasourceService {
@@ -71,11 +73,7 @@ export class InventoryDatasourceService {
   }
 
   extendQueryByColumn = (query: any, column: Column) => {
-    if (!column.path) {
-      return query;
-    }
-
-    if (column.filterable && column.filterPredicate) {
+    if (column.filterable && column.filterPredicate && column.path) {
       const queryObj: any = {};
       queryObj[column.path] = column.filterPredicate;
       query.__filter = { ...query.__filter, ...queryObj };
@@ -86,11 +84,31 @@ export class InventoryDatasourceService {
     }
 
     if (column.sortable && column.sortOrder) {
-      const cs: any = {};
-      cs[column.path] = column.sortOrder === 'asc' ? 1 : -1;
-      query.__orderby.push(cs);
+      const sortOrder = column.sortOrder === 'asc' ? 1 : -1;
+
+      if (
+        this.hasSortingConfig(column) &&
+        column.sortingConfig &&
+        !isEmpty(column.sortingConfig.pathSortingConfigs)
+      ) {
+        column.sortingConfig.pathSortingConfigs.forEach((config) => {
+          this.addSortationToQuery(query, config.path, sortOrder);
+        });
+      } else if (column.path) {
+        this.addSortationToQuery(query, column.path, sortOrder);
+      }
     }
 
     return query;
   };
+
+  private hasSortingConfig(column: Column): column is CustomColumn {
+    return has(column, 'sortingConfig');
+  }
+
+  private addSortationToQuery(query: any, path: string, sortOrder: number) {
+    const cs: any = {};
+    cs[path] = sortOrder;
+    query.__orderby.push(cs);
+  }
 }

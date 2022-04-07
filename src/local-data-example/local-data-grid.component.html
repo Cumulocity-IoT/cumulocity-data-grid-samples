@@ -4,11 +4,11 @@
   [columns]="columns"
   [rows]="rows"
   [pagination]="pagination"
-  [actionControls]="actionControls"
+  [actionControls]="[]"
 >
   <c8y-column name="temperature">
     <ng-container *c8yCellRendererDef="let context">
-      {{ context.value ? context.value + " °C" : "-" }}
+      {{ context.value ? context.value + ' °C' : '-' }}
     </ng-container>
   </c8y-column>
 </c8y-data-grid>

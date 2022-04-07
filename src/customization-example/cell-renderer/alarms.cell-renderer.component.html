@@ -1,0 +1,34 @@
+<small
+  class="status critical text-nowrap"
+  *ngIf="context.item.c8y_ActiveAlarmsStatus?.critical"
+>
+  {{ context.item.c8y_ActiveAlarmsStatus?.critical }}
+  <i [c8yIcon]="'warning'"></i>
+</small>
+<small
+  class="status major text-nowrap"
+  *ngIf="context.item.c8y_ActiveAlarmsStatus?.major"
+>
+  {{ context.item.c8y_ActiveAlarmsStatus?.major }}
+  <i [c8yIcon]="'exclamation-circle'"></i>
+</small>
+<small
+  class="status minor text-nowrap"
+  *ngIf="context.item.c8y_ActiveAlarmsStatus?.minor"
+>
+  {{ context.item.c8y_ActiveAlarmsStatus?.minor }}
+  <i [c8yIcon]="'exclamation-circle'"></i>
+</small>
+<small
+  class="status warning text-nowrap"
+  *ngIf="context.item.c8y_ActiveAlarmsStatus?.warning"
+>
+  {{ context.item.c8y_ActiveAlarmsStatus?.warning }}
+  <i [c8yIcon]="'circle'"></i>
+</small>
+<small
+  class="status text-nowrap"
+  *ngIf="!context.item.c8y_ActiveAlarmsStatus"
+>
+  {{ "NONE" | translate }}
+</small>
