@@ -18,12 +18,13 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { CustomColumn } from 'src/models/data-grid.model';
 import { GridConfigCacheService } from '../services/grid-config-cache.service';
-import { DevicesDatasourceService } from '../services/devices-datasource.service';
 import { AlarmsCellRendererComponent } from './cell-renderer/alarms.cell-renderer.component';
 import { DateFilterRendererComponent } from './custom-filters/date-filter-renderer.component';
+import { NoCountDevicesDatasourceService } from './no-count-devices-datasource.service';
+import { NoCountInventoryDatasourceService } from './no-count-inventory-datasource.service';
 
 @Component({
-  providers: [DevicesDatasourceService],
+  providers: [NoCountInventoryDatasourceService, NoCountDevicesDatasourceService],
   selector: 'customization-grid',
   templateUrl: './customization-grid.component.html',
 })
@@ -36,7 +37,7 @@ export class CustomizationGridComponent {
   loadingItemsLabel = gettext('Loading devices…');
 
   /** Takes an event emitter. When an event is emitted, the grid will be reloaded. */
-  refresh = new EventEmitter<any>();
+  refresh = new EventEmitter<void>();
 
   columns: Column[];
   pagination: Pagination;
@@ -56,7 +57,7 @@ export class CustomizationGridComponent {
   readonly GRID_CONFIG_CACHE_KEY = 'custom-filter-config';
 
   constructor(
-    protected devicesDataSource: DevicesDatasourceService,
+    protected devicesDataSource: NoCountDevicesDatasourceService,
     protected alertService: AlertService,
     protected modal: ModalService,
     protected translateService: TranslateService,
@@ -67,22 +68,17 @@ export class CustomizationGridComponent {
       this.GRID_CONFIG_CACHE_KEY,
       this.getDefaultColumns()
     );
-    this.pagination = this.configCacheService.getUserConfiguredPagination(
-      this.GRID_CONFIG_CACHE_KEY
-    ) ?? this.getDefaultPagination();
+    this.pagination =
+      this.configCacheService.getUserConfiguredPagination(this.GRID_CONFIG_CACHE_KEY) ??
+      this.getDefaultPagination();
   }
 
   getDefaultPagination(): Pagination {
-    return { currentPage: 1, pageSize: 30 };
+    return { currentPage: 1, pageSize: 10 };
   }
 
   getDefaultColumns(): CustomColumn[] {
     return [
-      {
-        name: 'id',
-        header: gettext('ID'),
-        path: 'id',
-      },
       {
         name: 'name',
         header: gettext('Name'),

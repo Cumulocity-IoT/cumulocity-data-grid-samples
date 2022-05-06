@@ -1,0 +1,265 @@
+<div class="card">
+  <div class="card-header separator">
+    <h4 class="card-title">String query playground</h4>
+  </div>
+  <div class="card-block">
+    <div class="tight-grid">
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group">
+          <label for="stringFilterInput">Fragment</label>
+          <input
+            id="stringFilterInput"
+            type="text"
+            class="form-control"
+            placeholder="e.g. count"
+            [(ngModel)]="stringView.path"
+          />
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group">
+          <label for="stringSymbolSelect">Select operation</label>
+          <div class="c8y-select-wrapper">
+            <select id="stringSymbolSelect" class="form-control" [(ngModel)]="stringView.symbol">
+              <option
+                *ngFor="let symbol of stringSymbols"
+                (click)="onStringDropdownSelect(symbol)"
+                [value]="symbol"
+              >
+                {{ symbol }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group">
+          <label for="stringFilterInput">Text</label>
+          <input
+            id="stringFilterInput"
+            type="text"
+            class="form-control"
+            [(ngModel)]="stringView.value"
+          />
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group">
+          <label for="stringFilterJSONSubmit">Submit</label>
+          <button
+            id="stringFilterJSONSubmit"
+            type="button"
+            class="btn btn-primary"
+            (click)="generateStringJSON()"
+          >
+            Generate JSON
+          </button>
+        </div>
+      </div>
+    </div>
+    <textarea
+      id="stringQuery"
+      class="form-control"
+      rows="6"
+      name="stringQuery"
+      [(ngModel)]="stringQueryInput"
+    ></textarea>
+
+    <button type="submit" class="btn btn-primary" (click)="createStringQuery()">Build query</button>
+  </div>
+  <div class="card-footer separator">
+    <label for="stringQueryOutput">Output:</label>
+    <p id="stringQueryOutput">{{ stringQuery }}</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header separator">
+    <h4 class="card-title">Number query playground</h4>
+  </div>
+  <div class="card-block">
+    <div class="tight-grid">
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group">
+          <label for="numberFilterInput">Fragment</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="e.g. count"
+            [(ngModel)]="numberView.path"
+          />
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group">
+          <label for="symbolSelect">Select symbol</label>
+          <div class="c8y-select-wrapper">
+            <select id="symbolSelect" class="form-control" [(ngModel)]="numberView.symbol">
+              <option
+                *ngFor="let symbol of numberSymbols"
+                (click)="onNumberDropdownSelect(symbol)"
+                [value]="symbol"
+              >
+                {{ symbol }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group">
+          <label for="numberFilterInput">Number</label>
+          <input
+            id="numberFilterInput"
+            type="number"
+            class="form-control"
+            [(ngModel)]="numberView.value"
+          />
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group">
+          <label for="numberFilterJSONSubmit">Submit</label>
+          <button
+            id="numberFilterJSONSubmit"
+            type="button"
+            class="btn btn-primary"
+            (click)="generateNumberJSON()"
+          >
+            Generate JSON
+          </button>
+        </div>
+      </div>
+    </div>
+    <textarea
+      id="numberQuery"
+      class="form-control"
+      rows="6"
+      name="numberQuery"
+      [(ngModel)]="numberQueryInput"
+    ></textarea>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" (click)="createNumberQuery()">
+        Build query
+      </button>
+    </div>
+  </div>
+  <div class="card-footer separator">
+    <label for="numberQueryOutput">Output:</label>
+    <p id="numberQueryOutput">{{ numberQuery }}</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header separator">
+    <h4 class="card-title">Date query playground</h4>
+  </div>
+  <div class="card-block">
+    <div class="tight-grid">
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group">
+          <label for="dateFilterInput">Fragment</label>
+          <input
+            id="dateFilterInput"
+            type="text"
+            class="form-control"
+            placeholder="e.g. creationTime or lastUpdated"
+            [(ngModel)]="dateView.path"
+          />
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group">
+          <label for="startDate">Start date</label>
+          <input id="startDate" type="date" class="form-control" [(ngModel)]="dateView.dateFrom" />
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group">
+          <label for="endDate">End date</label>
+          <input id="endDate" type="date" class="form-control" [(ngModel)]="dateView.dateTo" />
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group">
+          <label for="dateFilterJSONSubmit">Submit</label>
+          <button
+            id="dateFilterJSONSubmit"
+            type="button"
+            class="btn btn-primary"
+            (click)="generateDateJSON()"
+          >
+            Generate JSON
+          </button>
+        </div>
+      </div>
+    </div>
+    <textarea
+      id="dateQuery"
+      class="form-control"
+      rows="6"
+      name="dateQuery"
+      [(ngModel)]="dateQueryInput"
+    ></textarea>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" (click)="createDateQuery()">Build query</button>
+    </div>
+  </div>
+  <div class="card-footer separator">
+    <label for="dateQueryOutput">Output:</label>
+    <p id="dateQueryOutput">{{ dateQuery }}</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header separator">
+    <h4 class="card-title">Availability status playground</h4>
+  </div>
+  <div class="card-block">
+    <div class="tight-grid">
+      <div class="col-sm-5 col-xs-6">
+        <div class="form-group">
+          <label for="stateFilterInput">Fragment</label>
+          <p>c8y_Availability.status</p>
+        </div>
+      </div>
+
+      <div class="col-sm-5 col-xs-6">
+        <div class="form-group">
+          <label for="selectedAvailabilityItems">Select state</label>
+          <c8y-select
+            id="selectedAvailabilityItems"
+            [items]="availabilityItems"
+            [placeholder]="'Select availability states'"
+            (onChange)="onUserChangedAvailabilitySelect($event)"
+          ></c8y-select>
+        </div>
+      </div>
+    </div>
+    <textarea
+      id="availabilityQuery"
+      class="form-control"
+      rows="6"
+      name="availabilityQuery"
+      [(ngModel)]="availabilityQueryInput"
+    ></textarea>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" (click)="createAvailabilityQuery()">
+        Build query
+      </button>
+    </div>
+  </div>
+  <div class="card-footer separator">
+    <label for="availabilityQueryOutput">Output:</label>
+    <p id="availabilityQueryOutput">{{ availabilityQuery }}</p>
+  </div>
+</div>

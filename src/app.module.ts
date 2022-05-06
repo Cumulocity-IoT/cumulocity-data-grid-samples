@@ -6,10 +6,12 @@ import { LocalDataGridModule } from './local-data-example/local-data-grid.module
 import { RemoteDataGridModule } from './remote-data-example/remote-data-grid.module';
 import { CustomizationExampleModule } from './customization-example/customization-example.module';
 import { MinimumDataGridModule } from './minimum-example/minimum-data-grid.module';
+import { QueryPlaygrounModule } from './query-playground/query-playground.module';
 
 @NgModule({
   imports: [
     // Grid example modules
+    QueryPlaygrounModule,
     LocalDataGridModule,
     RemoteDataGridModule,
     CustomizationExampleModule,

@@ -2,6 +2,7 @@
 <c8y-data-grid
   [title]="'All devices on this tenant' | translate"
   class="scroll-column"
+  [displayOptions]="{ bordered: false, gridHeader: false, filter: false }"
   [columns]="columns"
   [pagination]="pagination"
   [actionControls]="actionControls"
@@ -14,9 +15,9 @@
   [infiniteScroll]="mode"
   (onConfigChange)="onConfigChange($event)"
 >
-  <c8y-column name="id">
+  <c8y-column name="name">
     <ng-container *c8yCellRendererDef="let context">
-      <a href="#/{{ context.value }}">{{ context.value }}</a>
+      <a href="#/{{ context.item.id }}">{{ context.value }}</a>
     </ng-container>
   </c8y-column>
   <c8y-column name="lastUpdated">

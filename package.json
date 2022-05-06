@@ -31,7 +31,7 @@
     "@c8y/cli": "1010.10.0"
   },
   "scripts": {
-    "start": "c8ycli server -u https://oee-dev.eu-latest.cumulocity.com/",
+    "start": "c8ycli server -u https://oee-dev.eu-latest.cumulocity.com/ -p 9122",
     "build": "c8ycli build",
     "deploy": "c8ycli deploy -u https://wipro-bootcamp.eu-latest.cumulocity.com/",
     "locale-extract": "c8ycli locale-extract"

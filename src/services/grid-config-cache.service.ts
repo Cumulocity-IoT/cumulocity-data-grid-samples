@@ -73,31 +73,12 @@ export class GridConfigCacheService {
   }
 
   /**
-   * Validates if the given key exists in the storage.
-   * If yes, removes the item from the cache and returns true.
-   * Returns false otherwise.
-   * @param key
-   * @returns
-   */
-  private remove(key: string): boolean {
-    if (this.has(key)) {
-      sessionStorage.removeItem(GRID_PREFIX + key);
-      return true;
-    }
-    return false;
-  }
-
-  /**
    * Removes all items set by this service.
    */
   private clear() {
     this.getGridKeys().forEach((key) => {
       sessionStorage.removeItem(key);
     });
-  }
-
-  private has(key: string): boolean {
-    return this.getGridKeys().includes(GRID_PREFIX + key);
   }
 
   /**
