@@ -15,6 +15,12 @@
   [infiniteScroll]="mode"
   (onConfigChange)="onConfigChange($event)"
 >
+<c8y-ui-empty-state
+    [icon]="'search'"
+    [title]="'No matching devices.' | translate"
+    [subtitle]="'Refine your search terms' | translate"
+    [horizontal]="true"
+  ></c8y-ui-empty-state>
   <c8y-column name="name">
     <ng-container *c8yCellRendererDef="let context">
       <a href="#/{{ context.item.id }}">{{ context.value }}</a>
