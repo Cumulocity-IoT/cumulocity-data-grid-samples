@@ -26,9 +26,14 @@
       <a href="#/{{ context.item.id }}">{{ context.value }}</a>
     </ng-container>
   </c8y-column>
+  <c8y-column name="lastMessage">
+    <ng-container *c8yCellRendererDef="let context">
+      {{ context.value | date }}
+    </ng-container>
+  </c8y-column>
   <c8y-column name="lastUpdated">
     <ng-container *c8yCellRendererDef="let context">
-      {{ context.value | date: 'medium' }}
+      {{ context.value | date }}
     </ng-container>
   </c8y-column>
 </c8y-data-grid>

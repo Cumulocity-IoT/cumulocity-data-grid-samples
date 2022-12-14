@@ -66,7 +66,7 @@ export class NoCountInventoryDatasourceService {
       query.__filter = { ...query.__filter, ...column.externalFilterQuery };
     }
 
-    if (column.sortable && column.sortOrder) {
+    if (column.sortOrder) {
       const sortOrder = column.sortOrder === 'asc' ? 1 : -1;
 
       if (

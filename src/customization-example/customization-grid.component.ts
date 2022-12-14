@@ -5,7 +5,7 @@ import {
   AlertService,
   Column,
   ColumnDataType,
-  gettext,
+  _,
   LoadMoreMode,
   ModalService,
   Pagination,
@@ -32,9 +32,9 @@ export class CustomizationGridComponent {
   mode: LoadMoreMode = 'show';
 
   /** The label for load more button. */
-  loadMoreItemsLabel = gettext('Load more devices');
+  loadMoreItemsLabel = _('Load more devices');
   /** The label for loading indicator. */
-  loadingItemsLabel = gettext('Loading devices…');
+  loadingItemsLabel = _('Loading devices…');
 
   /** Takes an event emitter. When an event is emitted, the grid will be reloaded. */
   refresh = new EventEmitter<void>();
@@ -81,7 +81,7 @@ export class CustomizationGridComponent {
     return [
       {
         name: 'name',
-        header: gettext('Name'),
+        header: _('Name'),
         path: 'name',
         filterable: true,
       },
@@ -102,14 +102,14 @@ export class CustomizationGridComponent {
       },
       {
         name: 'lastMessage',
-        header: gettext('Last Message'),
+        header: _('Last Message'),
         path: 'c8y_Availability.lastMessage',
         filterable: true,
         dataType: ColumnDataType.TextShort,
         filteringFormRendererComponent: DateFilterRendererComponent,
       },
       {
-        header: gettext('Last Updated'),
+        header: _('Last Updated'),
         name: 'lastUpdated',
         filterable: true,
         path: 'lastUpdated',
@@ -123,16 +123,16 @@ export class CustomizationGridComponent {
     const device = row as IManagedObject;
     try {
       await this.modal.confirm(
-        gettext('Delete device'),
+        _('Delete device'),
         this.translateService.instant(
-          gettext(`You are about to delete device: "{{ name }}". Do you want to proceed?`),
+          _(`You are about to delete device: "{{ name }}". Do you want to proceed?`),
           { name: device.name }
         ),
         Status.DANGER,
-        { ok: gettext('Delete'), cancel: gettext('Cancel') }
+        { ok: _('Delete'), cancel: _('Cancel') }
       );
       await this.inventoryService.delete(device);
-      this.alertService.success(gettext('Device deleted.'));
+      this.alertService.success(_('Device deleted.'));
       // reload the grid to remove the just deleted item
       this.refresh.next();
     } catch (ex) {
@@ -146,18 +146,18 @@ export class CustomizationGridComponent {
   async onDeleteDevicesBulk(deviceIds: string[]) {
     try {
       await this.modal.confirm(
-        gettext('Delete devices'),
+        _('Delete devices'),
         this.translateService.instant(
-          gettext(`You are about to delete devices: "{{ devices }}". Do you want to proceed?`),
+          _(`You are about to delete devices: "{{ devices }}". Do you want to proceed?`),
           { devices: this.getCommaSeparatedIdsString(deviceIds) }
         ),
         Status.DANGER,
-        { ok: gettext('Delete'), cancel: gettext('Cancel') }
+        { ok: _('Delete'), cancel: _('Cancel') }
       );
 
       const deleteRequests = deviceIds.map((id) => this.inventoryService.delete(id));
       await Promise.all(deleteRequests);
-      this.alertService.success(deviceIds.length + ' ' + gettext('devices deleted.'));
+      this.alertService.success(deviceIds.length + ' ' + _('devices deleted.'));
       // reload the grid to remove the just deleted item
       this.refresh.next();
     } catch (ex) {

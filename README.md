@@ -1,5 +1,6 @@
 # cumulocity-data-grid-samples
-Multiple sample projects to showcase how the Cumulocity data-grid from the Web SDK can be used.
+
+Multiple samples of the c8y-data-grid to showcase the different implementation scenarios.
 
 ------------------------------
 
