@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { InventoryService, IResultList, IManagedObject, QueriesUtil } from '@c8y/client';
 import { Column, DataSourceModifier, Pagination, ServerSideDataResult } from '@c8y/ngx-components';
-import { CustomColumn } from 'src/models/data-grid.model';
-import { has, isEmpty } from 'lodash-es';
+import { hasSearchableConfig, hasSortingConfig, SearchColumn } from '../models/data-grid.model';
+import { isEmpty } from 'lodash-es';
 
 @Injectable({ providedIn: 'root' })
 export class InventoryDatasourceService {
@@ -15,8 +15,8 @@ export class InventoryDatasourceService {
     dataSourceModifier: DataSourceModifier,
     baseQuery: object
   ): Promise<ServerSideDataResult> {
-    const filterQuery = this.createQueryFilter(dataSourceModifier.columns, baseQuery);
-    const allQuery = this.createQueryFilter([], baseQuery);
+    const filterQuery = this.createQueryFilter(dataSourceModifier.columns, baseQuery, dataSourceModifier.searchText);
+    const allQuery = this.createQueryFilter([], baseQuery, '');
 
     const mosForPage = this.fetchManagedObjectsForPage(filterQuery, dataSourceModifier.pagination);
     const filtered = this.fetchManagedObjectsCount(filterQuery);
@@ -62,11 +62,15 @@ export class InventoryDatasourceService {
       .then((result) => (result.paging !== undefined ? result.paging.totalPages : 0));
   }
 
-  createQueryFilter(columns: Column[], baseQuery: object): { query: string } {
+  createQueryFilter(columns: Column[], baseQuery: object, search: string): { query: string } {
     const query = columns.reduce(this.extendQueryByColumn, {
       __filter: baseQuery,
       __orderby: [],
     });
+
+    if (search) {
+      this.extendQueryBySearchableColumnSearch(query, columns, search);
+    }
 
     const queryString = this.queriesUtil.buildQuery(query);
     return { query: queryString };
@@ -87,7 +91,7 @@ export class InventoryDatasourceService {
       const sortOrder = column.sortOrder === 'asc' ? 1 : -1;
 
       if (
-        this.hasSortingConfig(column) &&
+        hasSortingConfig(column) &&
         column.sortingConfig &&
         !isEmpty(column.sortingConfig.pathSortingConfigs)
       ) {
@@ -102,8 +106,32 @@ export class InventoryDatasourceService {
     return query;
   };
 
-  private hasSortingConfig(column: Column): column is CustomColumn {
-    return has(column, 'sortingConfig');
+  private extendQueryBySearchableColumnSearch(query: any, columns: Column[], search: string): void {
+    if (!search || !search.length) {
+      return;
+    }
+
+    const text = `*${isNaN(+search) ? this.caseInsensitivify(search) : search}*`;
+    const orArray: object[] = [];
+    columns
+      .filter((column) => hasSearchableConfig(column) && column.searchable)
+      .forEach((column: SearchColumn) => {
+        orArray.push({ __eq: { [column.path]: text } });
+      });
+
+    const orFilter = { __or: orArray };
+    query.__filter = { ...query.__filter, ...orFilter };
+  }
+
+  private caseInsensitivify(value: string): string {
+    let res = '';
+    for (let i = 0; i < value.length; i++) {
+      const char = value.charAt(i);
+      char.match(/[a-z]/i)
+        ? (res = res + '[' + char.toLowerCase() + char.toUpperCase() + ']')
+        : (res = res + '' + char);
+    }
+    return res;
   }
 
   private addSortationToQuery(query: any, path: string, sortOrder: number) {

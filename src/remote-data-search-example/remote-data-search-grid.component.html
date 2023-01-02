@@ -1,0 +1,10 @@
+<c8y-title>Remote Data Grid example</c8y-title>
+<c8y-data-grid
+  [title]="'Search devices on this tenant' | translate"
+  [columns]="columns"
+  [pagination]="pagination"
+  [actionControls]="actionControls"
+  [showSearch]="true"
+  [serverSideDataCallback]="devicesDataSource.serverSideDataCallback"
+>
+</c8y-data-grid>

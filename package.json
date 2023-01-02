@@ -3,7 +3,7 @@
   "version": "1015.0.235",
   "description": "",
   "scripts": {
-    "start": "c8ycli server -u https://oee-test.eu-latest.cumulocity.com/",
+    "start": "c8ycli server",
     "build": "c8ycli build",
     "deploy": "c8ycli deploy",
     "locale-extract": "c8ycli locale-extract",
