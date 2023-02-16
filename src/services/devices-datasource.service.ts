@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { DataSourceModifier, ServerSideDataResult } from '@c8y/ngx-components';
 import { InventoryDatasourceService } from './inventory-datasource.service';
+// import { InventoryDatasourceService } from './inventory-datasource.service';
 
 @Injectable()
 export class DevicesDatasourceService {
